@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
   Easing,
   StyleSheet,
@@ -18,7 +18,7 @@ function isValidSwipe(velocity, velocityThreshold, directionalOffset, directiona
   Math.abs(directionalOffset) < directionalOffsetThreshold;
 }
 
-export default class Onboarding extends React.Component {
+class Swipe extends Component {
 
   constructor(props) {
     super(props);
@@ -34,9 +34,21 @@ export default class Onboarding extends React.Component {
       onStartShouldSetPanResponder: () => true,
       onPanResponderRelease: (evt, gestureState) => {
         const swipeDirection = this._getSwipeDirection(gestureState);
-        console.log(swipeDirection);
+        this._triggerSwipeHandlers(swipeDirection, gestureState);
       }
     });
+  }
+
+  _triggerSwipeHandlers(swipeDirection, gestureState) {
+    const {SWIPE_LEFT, SWIPE_RIGHT} = swipeDirections;
+    switch (swipeDirection) {
+      case SWIPE_LEFT:
+        this.props.onSwipeLeft(gestureState);
+        break;
+      case SWIPE_RIGHT:
+        this.props.onSwipeRight(gestureState);
+        break;
+    }
   }
 
   _getSwipeDirection(gestureState) {
@@ -63,3 +75,15 @@ export default class Onboarding extends React.Component {
     );
   }
 }
+
+Swipe.propTypes = {
+  onSwipeLeft: PropTypes.func,
+  onSwipeRight: PropTypes.func,
+}
+
+Swipe.defaultProps = {
+  onSwipeLeft: () => {},
+  onSwipeRight: () => {}
+}
+
+export default Swipe;

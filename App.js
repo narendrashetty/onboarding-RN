@@ -5,6 +5,7 @@ import {
   TouchableWithoutFeedback 
 } from 'react-native';
 import CircleTransition from './CircleTransition';
+import Swipe from './Swipe';
 
 const screens = [{
   id: 0,
@@ -46,13 +47,13 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <TouchableWithoutFeedback onPress={this.onPress.bind(this)}>
-        <View style={[styles.container, {backgroundColor: this.state.currentbg}]}>
-          <CircleTransition
-            ref={(circle) => { this.circleTransition = circle }}
-          />
-        </View>
-      </TouchableWithoutFeedback>
+      <Swipe 
+        style={[styles.container, {backgroundColor: this.state.currentbg}]}
+      >
+        <CircleTransition
+          ref={(circle) => { this.circleTransition = circle }}
+        />
+      </Swipe>
     );
   }
 }

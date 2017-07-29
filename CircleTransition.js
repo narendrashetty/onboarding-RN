@@ -13,20 +13,21 @@ class CircleTransition extends Component {
     };
   }
 
-  start(color) {
+  start(color, callback) {
   	this.setState({
       color: color
     }, () => {
-      this.animate();
+      this.animate(callback);
     });
   }
 
-  animate() {
+  animate(callback) {
     Animated.timing(this.state.scale, {
       toValue: 4,
       duration: this.props.duration,
       easing: this.props.easing
     }).start(() => {
+      callback();
       this.hideCircle();
     });
   }

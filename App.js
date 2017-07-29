@@ -30,10 +30,17 @@ export default class App extends React.Component {
   onPress() {
     const { _counter } = this.state;
     let newCounter = _counter < screens.length - 1 ? _counter + 1 : 0;
+    const newColor = screens[newCounter].bgcolor;
     this.setState({
       _counter: newCounter
     }, () => {
-      this.circleTransition.start(screens[newCounter].bgcolor);
+      this.circleTransition.start(newColor, this.changeColor.bind(this, newColor));
+    });
+  }
+
+  changeColor(newColor) {
+    this.setState({
+      currentbg: newColor,
     });
   }
 

@@ -32,7 +32,24 @@ export default class App extends React.Component {
     });
   }
 
+  getLeftPosition () {
+    const halfSize = size / 2;
+    const halfWidth = width / 2;
+    let marginHorizontalTopLeft = -halfSize;
+
+    return marginHorizontalTopLeft + halfWidth;
+  }
+
+  getTopPosition () {
+    const halfSize = size / 2;
+    let marginVerticalTopLeft = -halfSize;
+
+    return marginVerticalTopLeft + height;
+  }
+
   render() {
+    let topPosition = this.getTopPosition();
+    let leftPosition = this.getLeftPosition();
     return (
       <TouchableWithoutFeedback onPress={this.onPress.bind(this)}>
         <View style={styles.container}>
@@ -41,6 +58,8 @@ export default class App extends React.Component {
             backgroundColor: '#ccc',
             width: size,
             height: size,
+            left: leftPosition,
+            top: topPosition,
             borderRadius: size / 2,
             transform: [{
               scale: this.state.scale

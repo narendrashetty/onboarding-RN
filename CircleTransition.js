@@ -13,15 +13,27 @@ class CircleTransition extends Component {
     };
   }
 
+  start(color) {
+  	this.setState({
+      color: color
+    }, () => {
+      this.animate();
+    });
+  }
+
   animate() {
     Animated.timing(this.state.scale, {
       toValue: 4,
       duration: this.props.duration,
       easing: this.props.easing
     }).start(() => {
-      this.setState({
-        scale: new Animated.Value(0)
-      });
+      this.hideCircle();
+    });
+  }
+
+  hideCircle () {
+    this.setState({
+      scale: new Animated.Value(0)
     });
   }
 

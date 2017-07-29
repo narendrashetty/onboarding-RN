@@ -31,12 +31,22 @@ export default class App extends React.Component {
   onSwipeLeft() {
     const { _counter } = this.state;
     let newCounter = _counter < screens.length - 1 ? _counter + 1 : 0;
-    const newColor = screens[newCounter].bgcolor;
+    this.swipeTo(newCounter);
+  }
+
+  onSwipeRight() {
+    const { _counter } = this.state;
+    let newCounter = _counter === 0 ? screens.length - 1 : _counter - 1;
+    this.swipeTo(newCounter);
+  }
+
+  swipeTo(counter) {
+    const newColor = screens[counter].bgcolor;
     this.setState({
-      _counter: newCounter
+      _counter: counter
     }, () => {
       this.circleTransition.start(newColor, this.changeColor.bind(this, newColor));
-    });
+    }); 
   }
 
   changeColor(newColor) {
@@ -50,6 +60,7 @@ export default class App extends React.Component {
       <Swipe 
         style={[styles.container, {backgroundColor: this.state.currentbg}]}
         onSwipeLeft={this.onSwipeLeft.bind(this)}
+        onSwipeRight={this.onSwipeRight.bind(this)}
       >
         <CircleTransition
           ref={(circle) => { this.circleTransition = circle }}

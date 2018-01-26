@@ -9,19 +9,24 @@ class CircleTransition extends Component {
 
     this.state = {
       scale: new Animated.Value(0),
-      color: '#ccc'
+      color: '#ccc',
+      startedAniation: false
     };
   }
 
   start(color, callback) {
   	this.setState({
-      color: color
+      color: color,
+      startedAniation: true
     }, () => {
       this.animate(callback);
     });
   }
 
   animate(callback) {
+    this.setState({
+            startedAniation: false
+     });
     Animated.timing(this.state.scale, {
       toValue: 4,
       duration: this.props.duration,
